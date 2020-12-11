@@ -1,23 +1,68 @@
-import logo from './logo.svg';
+import { useState, useEffect, useRef } from 'react'
+import ReactDOM from 'react-dom';
+import mapboxgl from 'mapbox-gl';
 import './App.css';
 
-function App() {
+import 'mapbox-gl/dist/mapbox-gl.css'
+
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
+
+const App = () => {
+
+  const [state, setState] = useState({
+    coordinates: [13.17080317085379, -59.6034520733074],
+    zoom: 11
+  })
+
+
+  useEffect(() => {
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [state.coordinates[1], state.coordinates[0]],
+      zoom: state.zoom
+    });
+
+    map.on('click', (e) => {
+      console.log(e)
+    })
+
+    map.on('load', () => {
+      console.log('map has loaded')
+
+      map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+      new mapboxgl.Marker({
+        color: "red",
+        // draggable: true
+      }).setLngLat([state.coordinates[1], state.coordinates[0]])
+        .addTo(map);
+    })
+
+  }, [])
+
+  const addMarker = () => {
+    //TODO: Add a marker when user clicks on map and display in the left side
+    //NOTE: Each marker must have distinct coordinates within Barbados
+    //NOTE: Utilize localstorage. No auth required.
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h2>Map app</h2>
       </header>
+      <div style={{ display: 'flex', width: '100%' }}>
+        <div style={{ width: '25%' }}>
+          Marker List
+          {/* Add list of todos here */}
+        </div>
+        <div id='map' style={{ height: '500px', width: '100%' }}>
+
+        </div>
+      </div>
+
     </div>
   );
 }
