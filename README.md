@@ -9,4 +9,3 @@
 
 ## Note
 1. No additional npm packages are allowed
-2. Create the popup using React Portals or plain CSS
