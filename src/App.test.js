@@ -1,8 +1,21 @@
 import { render, screen } from '@testing-library/react';
+import mapboxgl from 'mapbox-gl';
 import App from './App';
+import 'mapbox-gl/dist/mapbox-gl.css'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+describe("testing Map app", () => {
+
+  test('renders without crashing', () => {
+    render(<App />);
+    const headerElement = screen.getByText(/map app/i);
+    expect(headerElement).toBeInTheDocument();
+  })
+
+  test('renders Map', () => {
+    render(<App />);
+    // let map = mapboxgl.Map
+    expect(mapboxgl.Map).toHaveBeenCalledTimes(1)
+  });
+
 });

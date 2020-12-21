@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom';
+import { useState, useEffect } from 'react'
 import mapboxgl from 'mapbox-gl';
 import './App.css';
 
@@ -17,29 +16,30 @@ const App = () => {
 
   useEffect(() => {
 
-    const map = new mapboxgl.Map({
+    var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [state.coordinates[1], state.coordinates[0]],
       zoom: state.zoom
     });
+    console.log(map)
+    // map.on('click', (e) => {
+    //   console.log(e)
+    // })
 
-    map.on('click', (e) => {
-      console.log(e)
-    })
+    // map.on('load', () => {
+    //   console.log('map has loaded')
 
-    map.on('load', () => {
-      console.log('map has loaded')
+    //   map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-      map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+    //   new mapboxgl.Marker({
+    //     color: "red",
+    //     // draggable: true
+    //   }).setLngLat([state.coordinates[1], state.coordinates[0]])
+    //     .addTo(map);
+    // })
 
-      new mapboxgl.Marker({
-        color: "red",
-        // draggable: true
-      }).setLngLat([state.coordinates[1], state.coordinates[0]])
-        .addTo(map);
-    })
-
+    //eslint-disable-next-line
   }, [])
 
   const addMarker = () => {
